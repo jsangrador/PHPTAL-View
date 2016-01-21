@@ -2,20 +2,22 @@
 /**
  * Slim Framework (http://slimframework.com)
  *
- * @link      https://github.com/slimphp/PHP-View
+ * @link      https://github.com/jsangrador/PHPTAL-View
  * @copyright Copyright (c) 2011-2015 Josh Lockhart
- * @license   https://github.com/slimphp/PHP-View/blob/master/LICENSE.md (MIT License)
+ * @license   https://github.com/jsangrador/PHPTAL-View/blob/master/LICENSE.md (MIT License)
  */
 namespace Slim\Views;
 
 use Psr\Http\Message\ResponseInterface;
+#require_once(__DIR__.'/../vendor/phptal/phptal/classes/PHPTAL.php');
+include "vendor/autoload.php";
 
 /**
- * Php View
+ * PhpTal View
  *
- * Render PHP view scripts into a PSR-7 Response object
+ * Render PHPTAL view templates into a PSR-7 Response object
  */
-class PhpRenderer
+class PhpTalRenderer
 {
     /**
      * @var string
@@ -58,17 +60,12 @@ class PhpRenderer
             throw new \RuntimeException("View cannot render `$template` because the template does not exist");
         }
 
-        $render = function ($template, $data) {
-            extract($data);
-            include $template;
-        };
+        $template = \PHPTAL::create($this->templatePath . $template);
+        foreach($data as $key => $value) {
+            $template->{$key} = $value;
+        }
+        $response->getBody()->write($template->execute());
 
-        ob_start();
-        $render($this->templatePath . $template, $data);
-        $output = ob_get_clean(); 
-
-        $response->getBody()->write($output);
-        
         return $response;
     }
 }

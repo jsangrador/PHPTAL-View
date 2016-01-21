@@ -1,26 +1,26 @@
-## PHP Renderer
+## PHPTAL Renderer
 
-This is a renderer for rendering PHP view scripts into a PSR-7 Response object. It works well with Slim Framework 3.
+This is a renderer for rendering PHPTAL view scripts into a PSR-7 Response object. It works well with Slim Framework 3.
 
 ## Installation
 
 Install with [Composer](http://getcomposer.org):
 
-    composer require slim/php-view
+    composer require jsangrador/PHPTAL-view
 
 ## Usage With Slim 3
 
 ```php
-use Slim\Views\PhpRenderer;
+use Slim\Views\PhpTalRenderer;
 
 include "vendor/autoload.php";
 
 $app = new Slim\App();
 $container = $app->getContainer();
-$container['renderer'] = new PhpRenderer("./templates");
+$container['renderer'] = new PhpTalRenderer("./templates");
 
 $app->get('/hello/{name}', function ($request, $response, $args) {
-    return $this->renderer->render($response, "/hello.php", $args);
+    return $this->renderer->render($response, "/hello.html", $args);
 });
 
 $app->run();
@@ -29,10 +29,10 @@ $app->run();
 ## Usage with any PSR-7 Project
 ```php
 //Construct the View
-$phpView = new PhpRenderer("./path/to/templates");
+$phpView = new PhpTalRenderer("./path/to/templates");
 
 //Render a Template
-$response = $phpView->render(new Response(), "/path/to/template.php", $yourData);
+$response = $phpView->render(new Response(), "/path/to/template.html", $yourData);
 ```
 
 ## Exceptions
