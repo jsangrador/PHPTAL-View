@@ -1,3 +1,5 @@
+Development of this fork has been moved to https://gitlab.com/jsangradorp/PHPTAL-View
+
 ## PHPTAL Renderer
 
 This is a renderer for rendering PHPTAL view scripts into a PSR-7 Response object. It works well with Slim Framework 3.
